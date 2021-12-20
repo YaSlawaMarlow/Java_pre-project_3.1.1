@@ -25,13 +25,6 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/")
-    public String loginPage() {
-        return "redirect:/login";
-    }
-
-    /////////////////////////////////////////////////////////////////////
-
     @GetMapping("/user")
     public String userPage(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
@@ -51,55 +44,5 @@ public class UserController {
     public String deleteU(@PathVariable("id") int id) {
         userService.deleteUser(id);
         return "redirect:/logout";
-    }
-
-    ////////////////////
-
-    @GetMapping(value = "/admin")
-    public String allUsers(Model model) {
-        model.addAttribute("getUsers", userService.getAllUsers());
-        return "all";
-    }
-
-    @GetMapping("/admin/new")
-    public String saveUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getRoles());///
-        return "new";
-    }
-
-    @PostMapping("/admin/add")
-    public String create(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (String role : checkBoxRoles) {
-            roleSet.add(roleService.getRoleByName(role));
-        }
-        user.setRoles(roleSet);
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/admin/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("roles", roleService.getRoles());///
-        return "edit";
-    }
-
-    @PatchMapping("/admin/edit")
-    public String update(@ModelAttribute("user") User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (String role : checkBoxRoles) {
-            roleSet.add(roleService.getRoleByName(role));
-        }
-        user.setRoles(roleSet);
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping("/admin/delete/{id}")
-    public String delete(@PathVariable("id") int id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
     }
 }
