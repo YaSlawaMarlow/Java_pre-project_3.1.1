@@ -19,8 +19,11 @@
     <input type="text" th:field="*{password}" id="password"/>
     <br><br>
     <th>Role</th>
-    <input type="checkbox" name="checkBoxRoles" value="ROLE_USER"/>USER
-    <input type="checkbox" name="checkBoxRoles" value="ROLE_ADMIN"/>ADMIN
+    <select class="custom-select " size="2" multiple id="selectRoleE" name="checkBoxRoles"
+            required>
+        <option th:each="role :${roles}" th:text="${role}">;
+        </option>
+    </select>
     <br><br>
     <input type="submit" value="Create"/>
     <br><br>

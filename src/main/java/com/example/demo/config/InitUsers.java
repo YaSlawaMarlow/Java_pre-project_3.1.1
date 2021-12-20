@@ -32,10 +32,12 @@ public class InitUsers {
 
         roleService.saveRole(new Role("ROLE_ADMIN"));
         roleService.saveRole(new Role("ROLE_USER"));
+        roleService.saveRole(new Role("ROLE_PLAYER"));
 
         Set<Role> rolesForAdmin = new HashSet<>();
         rolesForAdmin.add(roleService.getRoleByName("ROLE_ADMIN"));
         rolesForAdmin.add(roleService.getRoleByName("ROLE_USER"));
+        rolesForAdmin.add(roleService.getRoleByName("ROLE_PLAYER"));
 
         Set<Role> rolesForUser = new HashSet<>();
         rolesForUser.add(roleService.getRoleByName("ROLE_USER"));
